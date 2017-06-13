@@ -1,0 +1,26 @@
+module datapath(clk);
+input clk;
+wire [31:0] inst;
+wire RegDst,ALUSrc,MemtoReg,RegWrite,MemRead,MemWrite,Branch;
+wire [1:0] ALUOp;
+wire [3:0] ALUCont;
+wire [31:0] adr;
+wire [4:0] writeregister;
+wire [31:0] writedata,readdata1,readdata2,op2;
+wire [31:0] extend_imm;
+wire Zero;
+//wire Cin,Cout; ALUnun bu çıkışları şimdilik kullanılmıyor.
+control instcont(.opcode(inst[31:26]), .con({RegDst,ALUSrc,MemtoReg,RegWrite,MemRead,MemWrite,Branch,ALUOp[1],ALUOp[0]}));
+ALUControl instALUcont(.ALUOp(ALUOp),.funct(inst[5:0]),.ALUCont(ALUCont));
+inst_mem inst0(clk,adr,inst);
+mux32bit_2x1 inst4(.s(RegDst),.I0(inst[20:16]),.I1(inst[15:11]),.Y(writeregister));
+registerfile inst1(.writedata(writedata),.readdata1(readdata1),.readdata2(readdata2),
+.writeregister(writeregister), .readregister1(inst[25:21]),.readregister2(inst[20:16]),
+.clk(clk),.write(RegWrite));
+mux32bit_2x1 inst2(.s(ALUSrc),.I0(readdata2),.I1(extend_imm),.Y(op2));
+ALU inst3(.A(readdata1),.B(op2),.Result(writedata),.AluOp(ALUCont[1:0]),.Ainvert(ALUCont[3]),.Binvert(ALUCont[2]));
+signextend(inst[15:0],extend_imm);
+// MemtoReg in kontrol ettiği MUX eklenecek.
+// data memory eklenecek.
+// PC ile ilgili kısımlar 
+endmodule

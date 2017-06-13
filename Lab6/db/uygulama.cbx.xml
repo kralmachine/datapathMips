@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="uygulama">
+		<CBX_INST_ENTRY INSTANCE_NAME="|uygulama|datapath:d1|data_mem:inst4587|altsyncram:veri_bellegi_rtl_0" CBX_FILE_NAME="altsyncram_4gi1.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

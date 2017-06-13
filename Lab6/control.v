@@ -1,0 +1,11 @@
+module control(opcode, con);
+input [5:0] opcode;
+output reg [0:8] con;
+always @(opcode)
+case (opcode)
+6'b000000: con=9'b100100010; // r-tipi komutlar
+6'b100011: con=9'b011110000; // lw
+6'b101011: con=9'b010001000; // sw
+6'b000100: con=9'b000000101; // beq
+endcase
+endmodule

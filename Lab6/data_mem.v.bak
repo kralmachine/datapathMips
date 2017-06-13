@@ -1,0 +1,19 @@
+module data_mem(clk,adr,writedata,readdata,memread,memwrite);
+input clk,memread,memwrite;
+input[31:0]adr;
+output reg[31:0] readdata;
+input [31:0]writedata;
+reg[31:0] veri_bellegi[0:511];
+initial 
+	begin
+	veri_bellegi[7]=32'b0000_0000_0000_0000_0000_0000_0000_1010;
+	veri_bellegi[14]=32'b0000_0000_0000_0000_0000_0000_0000_1000;
+	end
+always@(posedge clk)
+	begin
+		if(memread)
+			readdata=veri_bellegi[adr];
+		else if(memwrite)
+			veri_bellegi[adr]=writedata;
+	end
+endmodule

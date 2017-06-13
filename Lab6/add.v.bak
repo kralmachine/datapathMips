@@ -1,0 +1,5 @@
+module add(pc,out);
+input[31:0]pc;
+output [31:0]out;
+assign out=pc+4;
+endmodule

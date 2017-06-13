@@ -1,0 +1,5 @@
+module add2(add,shift,out);
+input[31:0]add,shift;
+output out;
+assign out=add+shift;
+endmodule
